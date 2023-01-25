@@ -9,14 +9,12 @@ const fetcher = (args: any) => fetch(args).then((res) => res.json());
 
 export default function Home() {
   const { data, error, isLoading } = useSWR(
-    "http://10.40.14.23/wp-json/wp/v2/headings",
+    "https://danielcodex.com/wp-json/wp/v2/posts",
     fetcher
   );
 
   if (error) return <span>failed to load</span>;
   if (isLoading) return <span>Loading ...</span>;
-
-  const heading = data[0].acm_fields.heading;
   return (
     <>
       <Head>
@@ -26,7 +24,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1>{heading}</h1>
+        {(() => {
+          if (error) return <h1>failed to load</h1>;
+          if (isLoading) return <h1>Loading ...</h1>;
+          return data.map(
+            (item: { title: { rendered: string }; id: number }) => {
+              return <span key={item.id}>{item.title.rendered}</span>;
+            }
+          );
+        })()}
       </main>
     </>
   );
