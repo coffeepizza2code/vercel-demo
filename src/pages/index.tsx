@@ -13,8 +13,6 @@ export default function Home() {
     fetcher
   );
 
-  if (error) return <span>failed to load</span>;
-  if (isLoading) return <span>Loading ...</span>;
   return (
     <>
       <Head>
@@ -29,7 +27,11 @@ export default function Home() {
           if (isLoading) return <h1>Loading ...</h1>;
           return data.map(
             (item: { title: { rendered: string }; id: number }) => {
-              return <span key={item.id}>{item.title.rendered}</span>;
+              return (
+                <span key={item.id} style={{ fontSize: "25px" }}>
+                  {item.title.rendered}
+                </span>
+              );
             }
           );
         })()}
