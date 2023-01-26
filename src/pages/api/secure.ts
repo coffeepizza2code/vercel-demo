@@ -8,9 +8,8 @@ export default async function secure(
     res.status(400).json({ msg: "only GET request method" });
   }
 
-  const URL = process.env.WP_URL;
-  const data = await fetch(`${URL}/wp-json/wp/v2/posts`);
+  const data = await fetch("https://danielcodex.com/wp-json/wp/v2/posts");
   const post = await data.json();
 
-  res.status(200).json({msg: "hello there"});
+  res.status(200).json(post);
 }

@@ -24,21 +24,20 @@ function Secure() {
             />
           );
         }
-        // return data.map(
-        //   (item: { id: number; title: { rendered: string }; link: string }) => {
-        //     return (
-        //       <div key={item.id}>
-        //         <a
-        //           href={item.link}
-        //           className="text-blue-600 underline visited:text-red-400"
-        //         >
-        //           {removeHTMLtag(item.title.rendered)}
-        //         </a>
-        //       </div>
-        //     );
-        //   }
-        // );
-        console.log(data.msg);
+        return data.map(
+          (item: { id: number; title: { rendered: string }; link: string }) => {
+            return (
+              <div key={item.id}>
+                <a
+                  href={item.link}
+                  className="text-blue-600 underline visited:text-red-400"
+                >
+                  {removeHTMLtag(item.title.rendered)}
+                </a>
+              </div>
+            );
+          }
+        );
         
       })()}
     </div>
