@@ -1,15 +1,12 @@
 import Head from "next/head";
-import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 import useSWR from "swr";
-
-const inter = Inter({ subsets: ["latin"] });
-
-const fetcher = (args: any) => fetch(args).then((res) => res.json());
+import fetcher from "../utils/fetcher";
+import { Rings } from "react-loader-spinner";
+import removeHTMLtag from "../utils/normalizeStr";
 
 export default function Home() {
   const { data, error, isLoading } = useSWR(
-    "http://10.40.14.23/wp-json/wp/v2/headings",
+    "https://danielcodex.com/wp-json/wp/v2/posts",
     fetcher
   );
 
@@ -21,16 +18,38 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main className="h-screen flex flex-col justify-center items-center gap-9">
         {(() => {
           if (error) return <h1>failed to load</h1>;
-          if (isLoading) return <h1>Loading ...</h1>;
+          if (isLoading) {
+            return (
+              <Rings
+                height="80"
+                width="80"
+                color="#2563eb"
+                radius="6"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="rings-loading"
+              />
+            );
+          }
           return data.map(
-            (item: { title: { rendered: string }; id: number }) => {
+            (item: {
+              title: { rendered: string };
+              id: number;
+              link: string;
+            }) => {
               return (
-                <span key={item.id} style={{ fontSize: "25px" }}>
-                  {item.title.rendered}
-                </span>
+                <div key={item.id}>
+                  <a
+                    href={item.link}
+                    className="text-blue-600 underline visited:text-red-400"
+                  >
+                    {removeHTMLtag(item.title.rendered)}
+                  </a>
+                </div>
               );
             }
           );
