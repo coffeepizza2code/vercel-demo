@@ -12,5 +12,5 @@ export default async function secure(
   const data = await fetch(`${URL}/wp-json/wp/v2/posts`);
   const post = await data.json();
 
-  res.status(200).json(post);
+  res.status(200).json({msg: "hello there"});
 }
