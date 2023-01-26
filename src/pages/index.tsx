@@ -9,7 +9,7 @@ const fetcher = (args: any) => fetch(args).then((res) => res.json());
 
 export default function Home() {
   const { data, error, isLoading } = useSWR(
-    "https://danielcodex.com/wp-json/wp/v2/posts",
+    "http://10.40.14.23/wp-json/wp/v2/headings",
     fetcher
   );
 
